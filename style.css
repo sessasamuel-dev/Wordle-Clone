@@ -1,0 +1,247 @@
+@import url('https://fonts.googleapis.com/css2?family=Courgette&family=Itim&family=Roboto&display=swap');
+
+/* GLOBAL SELECTORS */
+*::after,*::before, * {
+    box-sizing: border-box;
+}
+
+body {
+    background-color: hsl(240, 3%, 7%);
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    /* responsive font size */
+    font-size: clamp(.5rem, 2.5vmin, 1.5rem);
+    font-family: 'Roboto', sans-serif;
+}
+
+/* TITLE STYLING */
+
+header {
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-bottom: .5px solid rgba(211, 211, 211, 0.338);
+    height: 90px;
+}
+
+header h4 {
+    font-family: 'Itim', cursive;
+    font-size: 32px;
+    color: #fff;
+    font-weight: 900;
+
+}
+
+/* KEYBOARD STYLING */
+
+.keyboard {
+    display: grid;
+    grid-template-columns: repeat(20,minmax(auto, 1.3em));
+    grid-auto-rows: 2.75em;
+    gap: 0.25em;
+    justify-content: center;
+}
+
+
+.key {
+    /* every key has 2 columns */
+    grid-column: 2 span;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: inherit;
+    border: none;
+    padding: 0;
+    background-color: hsl(
+        var(--hue, 200),
+        var(--saturation, 1%),
+        calc(var(--lightness-offset, 0%) + var(--lightness, 51%))
+      );
+    color: white;
+    fill: white; /* for delete key */
+    border-radius: 4px;
+    cursor: pointer;
+    user-select: none;
+}
+
+/* KEY STYLING FOR EACH SITUATION */
+
+.key.large {
+    /* large key has 3 columns */
+    grid-column: 3 span;
+}
+
+.key > svg {
+    width: 1.5em;
+    height: 1.5em;
+}
+
+.key:hover, .key:focus {
+    --lightness-offset: 10%;
+  }
+  
+  .key.wrong {
+    --lightness: 23%;
+  }
+  
+  .key.wrong-location {
+    --hue: 49;
+    --saturation: 51%;
+    --lightness: 47%;
+  }
+  
+  .key.correct {
+    --hue: 115;
+    --saturation: 29%;
+    --lightness: 43%;
+  }
+
+/* TILES STYLING */
+
+  .tiles-container {
+    display: grid;
+    grid-template-columns: repeat(5, 3.4em);
+    grid-template-rows: repeat(6, 3.4em);
+    justify-content: center;
+    align-content: center;
+    gap: .25em;
+    flex-grow: 1;
+    margin-bottom: 1.99em;
+    margin-top: 2.5em;
+  }
+
+  .tile {
+    border: 0.05em solid rgba(142, 135, 135, 0.281);
+    color: white;
+    font-size: 2.2em;
+    text-transform: uppercase;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: transform 250ms linear; /* for flip animation */
+  }
+
+  /* TILE BORDER STYLING FOR EACH SITUATION */
+
+   .tile[data-state="active"] {
+    border-color: hsl(200, 1%, 34%);
+  } 
+
+  .tile[data-state="wrong"] {
+    border: none;
+    background-color: hsl(240, 2%, 23%);
+  }
+  
+  .tile[data-state="wrong-location"] {
+    border: none;
+    background-color: hsl(49, 51%, 47%);
+  }
+  
+  .tile[data-state="correct"] {
+    border: none;
+    background-color: hsl(115, 29%, 43%);
+  }
+
+  /* ALERT SYTLING */
+
+  .alert-container {
+    position: fixed;
+    top: 10vh;
+    left: 50vw;
+    transform: translateX(-50%);
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .alert {
+    pointer-events: none;
+    background-color: hsl(204, 7%, 85%);
+    padding: .75em;
+    border-radius: .25em;
+    opacity: 1;
+    transition: opacity 500ms ease-in-out;
+    margin-bottom: .5em;
+  }
+  
+  .alert:last-child {
+    margin-bottom: 0;
+  }
+  
+  .alert.hide {
+    opacity: 0;
+  }
+
+  /* SHAKE ANIMATION */
+
+  .shake {
+    animation: shake 250ms ease-in-out;
+  }
+
+  @keyframes shake {
+
+    10% {
+      transform: translateX(-5%);
+    }
+    30% {
+      transform: translateX(5%);
+    }
+    50% {
+      transform: translateX(-8%);
+    }
+    70% {
+      transform: translateX(8%);
+    }
+    90% {
+      transform: translateX(5%);
+    }
+    100% {
+      transform: translateX(0);
+    }
+
+  }
+
+  /* FLIP ANIMATION */
+
+  .flip {
+    transform: rotateX(90deg);
+  }
+
+  /* WIN ANIMATION */
+
+  .win {
+    animation: win 500ms ease-in-out;
+  }
+  
+  @keyframes win {
+    20% {
+      transform: translateY(-50%);
+    }  
+  
+    40% {
+      transform: translateY(5%);
+    }  
+  
+    60% {
+      transform: translateY(-25%);
+    }  
+  
+    80% {
+      transform: translateY(2.5%);
+    }  
+  
+    90% {
+      transform: translateY(-5%);
+    }  
+  
+    100% {
+      transform: translateY(0);
+    }
+  }
+  
+
